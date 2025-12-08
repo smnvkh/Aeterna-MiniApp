@@ -7,6 +7,94 @@
   </head>
 
   <body class="index">
-    Index
+    <p class="Logo">Aeterna</p>
+    <section class="Cover">
+      <div class="HeadingAndCTA">
+        <div class="Heading">
+          <h1>Цифровой семейный архив воспоминаний</h1>
+          <img src="./images/home/Aeterna.svg" class="StrokeText" />
+          <p>Мы скоро откроемся. Подпишитесь, чтобы первыми узнать о запуске</p>
+        </div>
+        <div class="CTA" id="new_subscription">
+          <form
+            class="Form"
+            action="http://localhost:3000/api/v1/subscriptions"
+            accept-charset="UTF-8"
+            method="post"
+          >
+            <div class="FormField">
+              <input
+                class="FormInput"
+                placeholder="Введите e-mail"
+                type="email"
+                name="subscription[email]"
+                id="subscription_email"
+              />
+            </div>
+
+            <div class="FormActions">
+              <input
+                type="submit"
+                name="commit"
+                value="Подписаться"
+                class="FormButton"
+                data-disable-with="Подписаться"
+              />
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="MemoryExamples" id="home">
+        <div class="TextMemory">
+          <p class="MemoryDescription">
+            1998. Пляж, тёплый чай в термосе, и никто не хочет уезжать
+          </p>
+          <p class="MemoryAuthor">Валентина</p>
+        </div>
+        <div class="ImageMemory">
+          <img
+            src="./images/home/HomeImageGrandma.jpg"
+            class="ImageMemoryItem"
+          />
+          <p class="MemoryDate">20 июля 2023</p>
+        </div>
+        <div class="TextMemory">
+          <p class="MemoryDescription">
+            Наш первый дом стоял у реки, где росла старая ива
+          </p>
+          <p class="MemoryAuthor">Бабушка Мая</p>
+        </div>
+        <div class="ImageMemory">
+          <img
+            src="./images/home/HomeImageGrandma.jpg"
+            class="ImageMemoryItem"
+          />
+          <p class="MemoryDate">25 мая 2019</p>
+        </div>
+        <div class="TextMemory">
+          <p class="MemoryDescription">
+            Мама смеялась, когда я включал её любимую песню
+          </p>
+          <p class="MemoryAuthor">Папа</p>
+        </div>
+        <div class="TextMemory">
+          <p class="MemoryDescription">
+            Наш кот прожил с нами 19 лет. На фото он всегда посередине
+          </p>
+          <p class="MemoryAuthor">Бабушка Тамара</p>
+        </div>
+      </div>
+    </section>
+    <section class="Footer">
+      <p href="root_url" id="Name">AETERNA</p>
+      <div class="LinksAndDate">
+        <p>©Aeterna, 2025</p>
+      </div>
+      <div class="Authors">
+        <p>Чибичик Алёна</p>
+        <p>Семеновых Мария</p>
+        <p>Ямщикова Виктория</p>
+      </div>
+    </section>
   </body>
 </html>

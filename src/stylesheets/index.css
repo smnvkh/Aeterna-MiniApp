@@ -1,11 +1,248 @@
-body.index {
+.Logo {
+  font-family: 'Geist Mono';
+  font-weight: 300;
+  text-transform: uppercase;
+  font-size: 0.875rem;
+  line-height: 80%;
+  padding: 1.5rem;
+}
+
+.Cover {
+  font-family: 'Geist Mono';
+  font-weight: 300;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  padding: 2.87rem 0 0 17.81rem;
+}
+.HeadingAndCTA {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  justify-content: space-between;
+}
 
-  & > div,
-  & > a {
-    margin: 10px 0;
-  }
+.Heading {
+  width: 35.875rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.Heading > H1 {
+  font-family: 'Geist Mono';
+  font-size: 3rem;
+  line-height: 100%;
+  letter-spacing: -0.06rem;
+  font-weight: 300;
+}
+
+.StrokeText {
+  width: 18.7rem;
+  height: 100%;
+  align-self: end;
+  padding-right: 3rem;
+  margin-top: -1rem;
+}
+
+.Heading > p {
+  font-size: 1rem;
+  line-height: 110%;
+  width: 22rem;
+  margin-top: 0.3rem;
+  font-family: 'Neue Montreal';
+}
+
+.CTA > a {
+  stroke: #181b16;
+}
+
+.Form {
+  display: flex;
+  gap: 0.25rem;
+}
+
+.FormField,
+.FormActions {
+  display: flex;
+  width: 12rem;
+  padding: 1rem 1.25rem;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 2rem;
+  border-radius: 0.125rem;
+}
+
+.FormField {
+  border: 1px solid var(--dark-grey-20);
+  background: #fafaf9;
+}
+
+.FormInput,
+.FormButton {
+  all: unset;
+  color: var(--black-50);
+  font-family: 'Neue Montreal';
+  font-size: 0.875rem;
+  line-height: 100%;
+}
+
+.FormActions {
+  background: var(--light-blue, #bbd3f9);
+  cursor: pointer;
+}
+
+.FormButton {
+  color: var(--black, #181b16);
+  align-self: center;
+}
+
+#SuccessSubscription {
+  font-family: 'Neue Montreal';
+}
+
+.FormErrors {
+  margin-bottom: 16px;
+  color: #d93025;
+}
+
+.MemoryExamples {
+  position: relative;
+  width: 51%;
+  height: 50vh;
+}
+
+.TextMemory {
+  display: flex;
+  width: 14rem;
+  padding: 0.625rem;
+  flex-direction: column;
+  align-items: flex-end;
+  border-radius: 0.125rem;
+  background-color: var(--light-grey);
+  box-shadow: 0 2px 6px 0 rgba(24, 27, 22, 0.08);
+  position: absolute;
+  gap: 1.5rem;
+}
+
+.MemoryDescription {
+  font-size: 0.75rem;
+  letter-spacing: -0.015rem;
+  margin: 0;
+  color: var(--dark-grey);
+}
+
+.MemoryAuthor {
+  font-size: 0.625rem;
+  letter-spacing: -0.0125rem;
+  margin: 0;
+}
+
+.ImageMemory {
+  display: flex;
+  width: 10.625rem;
+  flex-direction: column;
+  align-items: center;
+  background: var(--Light-Grey, #eaebe9);
+  box-shadow: 0 2px 6px 0 rgba(24, 27, 22, 0.08);
+  border-radius: 0 0 0.125rem 0.125rem;
+  padding-bottom: 0.5rem;
+}
+
+body.index .ImageMemory {
+  position: absolute;
+}
+
+.ImageMemoryItem {
+  border-radius: 0.125rem 0.125rem 0 0;
+  height: 10.625rem;
+}
+
+.MemoryDate {
+  width: 90%;
+  text-align: center;
+  padding: 0.5rem;
+  color: var(--black-50);
+  font-size: 0.75rem;
+  border-bottom: 1px solid var(--black-50);
+  margin: 0;
+}
+
+body.index .TextMemory:first-child {
+  right: 9rem;
+  width: 12rem;
+}
+
+body.index .ImageMemory:nth-child(2) {
+  left: 26rem;
+  top: 3rem;
+}
+
+body.index .TextMemory:nth-child(3) {
+  left: -11rem;
+  top: 11rem;
+  width: 13.875rem;
+}
+
+body.index .ImageMemory:nth-child(4) {
+  top: 15rem;
+  left: 1rem;
+}
+
+body.index .TextMemory:nth-child(5) {
+  top: 18rem;
+  left: 27rem;
+  width: 12rem;
+}
+
+body.index .TextMemory:nth-child(6) {
+  top: 23rem;
+  left: 17rem;
+  width: 10.625rem;
+}
+
+.Footer {
+  display: flex;
+  justify-content: space-between;
+  font-family: 'Geist Mono';
+  font-weight: 300;
+  text-transform: uppercase;
+  font-size: 0.875rem;
+  line-height: 80%;
+  padding: 1rem;
+  width: 100%;
+  background-color: var(--light-blue);
+  justify-self: flex-end;
+  margin-top: 3.88rem;
+  padding: 1.5rem;
+  min-height: 17rem;
+}
+
+#Name {
+  font-family: 'SF Mono';
+  font-size: 4rem;
+  line-height: 80%;
+}
+
+.LinksAndDate {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 6rem;
+  padding-left: 31rem;
+  align-self: end;
+}
+
+.LinksAndDate p {
+  font-family: 'SF Mono';
+}
+
+.Pages.Footer {
+  margin-top: 0;
+  padding: 0;
+}
+
+.Authors p {
+  padding: 0 0 1.3rem;
+  margin: 0;
+  padding-right: 4.81rem;
 }

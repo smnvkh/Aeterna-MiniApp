@@ -1,4 +1,12 @@
 :root {
-  --white: white;
-  --black: black;
+  /* ------------------------- Colors ----------------------- */
+  --white: #f8f8f6;
+  --black: #181b16;
+  --half-black: #181b16;
+  --dark-grey: #40443f;
+  --light-grey: #eaebe9;
+  --light-blue: #bbd3f9;
+
+  --dark-grey-20: #40443f33;
+  --black-50: #00000080;
 }
