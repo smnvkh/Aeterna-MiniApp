@@ -1,3 +1,9 @@
+form {
+  &.hidden {
+    display: none;
+  }
+}
+
 .Logo {
   font-family: 'Geist Mono';
   font-weight: 300;
