@@ -58,8 +58,6 @@ function authorizeUser() {
       .then((data) => {
         console.log(data)
 
-        const container = document.getElementsByClassName('HeadingAndCTA')[0]
-
         if (data.is_success) {
           const element = document.createElement('div')
           element.innerText = `Привет, ${data.email}!`
@@ -68,15 +66,15 @@ function authorizeUser() {
           signOutButton.classList.add('textButton')
           signOutButton.innerText = 'Выйти'
 
-          container.appendChild(element)
+          document.body.appendChild(element)
 
           if (data.invite_code) {
             inviteElement = document.createElement('div')
             inviteElement.innerText = `Ваш код приглашения для родственников: ${data.invite_code}`
-            container.appendChild(inviteElement)
+            document.body.appendChild(inviteElement)
           }
 
-          container.appendChild(signOutButton)
+          document.body.appendChild(signOutButton)
 
           signOutButton.addEventListener('click', () => {
             fetch('http://localhost:3000/api/v1/sign_out.json', {
@@ -172,23 +170,31 @@ function initPreviewPage() {
     })
 }
 
-function createMemoryPreview(memory, container) {
+function createMemoryPreview(memoryData, container) {
   const wrapper = document.createElement('div')
-  wrapper.id = `memory_${memory.id}`
+  wrapper.id = `memory_${memoryData.id}`
+
+  const link = document.createElement('a')
+  link.href = `${container.dataset.memoryUri}?memory=${memoryData.id}`
+  link.innerText = memoryData.title
+
+  const title = document.createElement('h2')
+  title.appendChild(link)
 
   const body = document.createElement('p')
-  body.innerText = memory.body
+  body.innerText = memoryData.body
 
   const familyMember = document.createElement('p')
-  familyMember.innerText = memory.family_member
+  familyMember.innerText = memoryData.family_member
 
   const date = document.createElement('p')
-  date.innerText = memory.date
+  date.innerText = memoryData.date
 
   const image = document.createElement('img')
-  image.src = memory.image_url
+  image.src = memoryData.image_url
   image.width = 300
 
+  wrapper.appendChild(title)
   wrapper.appendChild(body)
   wrapper.appendChild(familyMember)
   wrapper.appendChild(date)
@@ -197,10 +203,27 @@ function createMemoryPreview(memory, container) {
   container.appendChild(wrapper)
 }
 
+function initMemoryPage() {
+  const searchParams = new URLSearchParams(window.location.search)
+  const id = searchParams.get('memory')
+  const url = document.body.dataset.url
+
+  fetch(url + id)
+    .then((response) => response.json())
+    .then((data) => {
+      console.log(data)
+      createMemoryPreview(data, document.body)
+    })
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   if (document.body.classList.contains('index')) {
     initSubscriptionForm()
     authorizeUser()
+  }
+
+  if (document.body.classList.contains('memory')) {
+    initMemoryPage()
   }
 
   if (document.body.classList.contains('preview')) {

@@ -73,6 +73,15 @@ module.exports = {
       chunks: ['index']
     }),
 
+    // Memory page
+    new HtmlWebpackPlugin({
+      hash: true,
+      scriptLoading: 'blocking',
+      template: './src/memory.html',
+      filename: './memory.html',
+      chunks: ['index']
+    }),
+
     // Partials
     new HtmlWebpackPartialsPlugin([
       {
