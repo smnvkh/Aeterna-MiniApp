@@ -45,6 +45,7 @@ function initSubscriptionForm() {
 
 function authorizeUser() {
   const jwt = Cookies.get('jwt')
+  let inviteElement
 
   if (jwt) {
     fetch('http://localhost:3000/api/v1/authorize_by_jwt.json', {
@@ -59,19 +60,82 @@ function authorizeUser() {
 
         const container = document.getElementsByClassName('HeadingAndCTA')[0]
 
-        const element = document.createElement('div')
-        element.innerText = `Welcome, ${data.email}`
-        element.classList.add('welcome-message')
+        if (data.is_success) {
+          const element = document.createElement('div')
+          element.innerText = `Привет, ${data.email}!`
 
-        container.appendChild(element)
+          const signOutButton = document.createElement('div')
+          signOutButton.classList.add('textButton')
+          signOutButton.innerText = 'Выйти'
+
+          container.appendChild(element)
+
+          if (data.invite_code) {
+            inviteElement = document.createElement('div')
+            inviteElement.innerText = `Ваш код приглашения для родственников: ${data.invite_code}`
+            container.appendChild(inviteElement)
+          }
+
+          container.appendChild(signOutButton)
+
+          signOutButton.addEventListener('click', () => {
+            fetch('http://localhost:3000/api/v1/sign_out.json', {
+              method: 'GET',
+              headers: {
+                Authorization: `Bearer ${jwt}`
+              }
+            })
+              .then((response) => response.json())
+              .then((data) => {
+                console.log(data)
+
+                element.remove()
+                signOutButton.remove()
+                if (inviteElement) inviteElement.remove()
+                Cookies.remove('jwt')
+                initLoginForm()
+                initSignupForm()
+              })
+          })
+        } else {
+          Cookies.remove('jwt')
+          initLoginForm()
+          initSignupForm()
+        }
       })
   } else {
     initLoginForm()
+    initSignupForm()
   }
 }
 
 function initLoginForm() {
   const form = document.getElementById('login_form')
+  const url = form.action
+  form.classList.remove('hidden')
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault()
+
+    const formData = new FormData(form)
+
+    fetch(url, {
+      method: 'POST',
+      body: formData
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data)
+        console.log(data.jwt)
+
+        Cookies.set('jwt', data.jwt)
+        window.location.reload()
+      })
+  })
+}
+
+function initSignupForm() {
+  const form = document.getElementById('signup_form')
   const url = form.action
   form.classList.remove('hidden')
 
