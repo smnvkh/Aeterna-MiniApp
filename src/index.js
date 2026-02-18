@@ -60,21 +60,30 @@ function authorizeUser() {
 
         if (data.is_success) {
           const element = document.createElement('div')
+          const headingText = document.querySelector('.HeadingText')
+          const ctaButton = document.querySelector('.CTA')
+          const heading = document.querySelector('.Heading')
           element.innerText = `Привет, ${data.email}!`
 
           const signOutButton = document.createElement('div')
           signOutButton.classList.add('textButton')
           signOutButton.innerText = 'Выйти'
 
-          document.body.appendChild(element)
+          if (headingText) {
+            headingText.replaceWith(element)
+          }
+          if (heading) {
+            heading.appendChild(signOutButton)
+          }
+          if (ctaButton) {
+            ctaButton.style.display = 'none'
+          }
 
           if (data.invite_code) {
             inviteElement = document.createElement('div')
             inviteElement.innerText = `Ваш код приглашения для родственников: ${data.invite_code}`
             document.body.appendChild(inviteElement)
           }
-
-          document.body.appendChild(signOutButton)
 
           signOutButton.addEventListener('click', () => {
             fetch('http://localhost:3000/api/v1/sign_out.json', {
@@ -87,8 +96,16 @@ function authorizeUser() {
               .then((data) => {
                 console.log(data)
 
+                if (headingText) {
+                  element.replaceWith(headingText)
+                }
+                if (heading) {
+                  heading.removeChild(signOutButton)
+                }
+                if (ctaButton) {
+                  ctaButton.style.display = 'block'
+                }
                 element.remove()
-                signOutButton.remove()
                 if (inviteElement) inviteElement.remove()
                 Cookies.remove('jwt')
                 initLoginForm()
@@ -158,7 +175,7 @@ function initSignupForm() {
 }
 
 function initPreviewPage() {
-  const container = document.querySelector('.previewMemories')
+  const container = document.querySelector('.memoriesSection')
   const url = container.dataset.url
 
   fetch(url)
@@ -185,7 +202,8 @@ function createMemoryPreview(memoryData, container) {
   body.innerText = memoryData.body
 
   const familyMember = document.createElement('p')
-  familyMember.innerText = memoryData.family_member
+  familyMember.innerText =
+    memoryData.family_member.to_s || memoryData.family_member
 
   const date = document.createElement('p')
   date.innerText = memoryData.date
@@ -216,8 +234,104 @@ function initMemoryPage() {
     })
 }
 
+function initNewMemoryForm() {
+  console.log('INIT NEW MEMORY')
+
+  const container = document.querySelector('.newMemoryForm')
+  if (!container) return
+
+  const createMemoryUrl = container.dataset.createMemoryUrl
+  const jwt = Cookies.get('jwt')
+
+  const addMemoryButton = document.createElement('div')
+  addMemoryButton.innerText = 'Добавить воспоминание'
+  addMemoryButton.classList.add('addMemoryButton')
+
+  container.appendChild(addMemoryButton)
+
+  let formVisible = false
+
+  addMemoryButton.addEventListener('click', () => {
+    if (formVisible) return
+
+    const form = document.createElement('form')
+    form.classList.add('memoryForm')
+    form.style.display = 'block' // чтобы сразу показывалось
+
+    // Создаем базовые поля
+    form.innerHTML = `
+      <input name="memory[title]" placeholder="Название" required />
+      <textarea name="memory[body]" placeholder="Текст воспоминания"></textarea>
+      <select name="memory[family_member_id]" required>
+        <option value="">Выберите родственника</option>
+      </select>
+      <select name="memory[category_list]">
+        <option value="">Выберите категорию</option>
+        <option value="Summer">Summer</option>
+        <option value="Childhood">Childhood</option>
+        <option value="Pets">Pets</option>
+        <option value="Holidays">Holidays</option>
+      </select>
+      <input name="memory[tag_list]" placeholder="Теги" />
+      <input type="date" name="memory[date]" required />
+      <input type="file" name="memory[image]" />
+      <button type="submit">Создать</button>
+    `
+
+    container.appendChild(form)
+    formVisible = true
+
+    const familySelect = form.querySelector(
+      'select[name="memory[family_member_id]"]'
+    )
+
+    // Подгружаем родственников через API
+    fetch('http://localhost:3000/api/v1/family_members.json', {
+      headers: { Authorization: `Bearer ${jwt}` }
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        data.forEach((member) => {
+          const option = document.createElement('option')
+          option.value = member.id
+          option.innerText = member.name
+          familySelect.appendChild(option)
+        })
+      })
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault()
+
+      const formData = new FormData(form)
+
+      fetch(createMemoryUrl, {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${jwt}`
+        },
+        body: formData
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          if (!data.id) {
+            alert(
+              'Ошибка создания: ' +
+                (data.errors?.join(', ') || 'неизвестная ошибка')
+            )
+            return
+          }
+
+          window.location.href = `http://localhost:8080/memories/show.html?memory=${data.id}`
+        })
+    })
+  })
+}
+
 document.addEventListener('DOMContentLoaded', () => {
-  if (document.body.classList.contains('index')) {
+  if (
+    document.body.classList.contains('home') &&
+    document.body.classList.contains('index')
+  ) {
     initSubscriptionForm()
     authorizeUser()
   }
@@ -226,7 +340,18 @@ document.addEventListener('DOMContentLoaded', () => {
     initMemoryPage()
   }
 
-  if (document.body.classList.contains('preview')) {
+  if (
+    document.body.classList.contains('memories') &&
+    document.body.classList.contains('index')
+  ) {
     initPreviewPage()
+  }
+
+  if (
+    document.body.classList.contains('memories') &&
+    document.body.classList.contains('new')
+  ) {
+    authorizeUser()
+    initNewMemoryForm()
   }
 })

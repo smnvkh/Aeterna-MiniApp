@@ -5,14 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Aeterna</title>
   </head>
-  <body class="index">
+  <body class="home index">
     <p class="Logo">Aeterna</p>
+    <nav class="menubar">
+      <span>Главная</span>
+      <a href="/memories/index.html">Воспоминания</a>
+    </nav>
     <section class="Cover">
       <div class="HeadingAndCTA">
         <div class="Heading">
           <h1>Цифровой семейный архив воспоминаний</h1>
           <img src="./images/home/Aeterna.svg" class="StrokeText" />
-          <p>Мы скоро откроемся. Подпишитесь, чтобы первыми узнать о запуске</p>
+          <p class="HeadingText">
+            Мы скоро откроемся. Подпишитесь, чтобы первыми узнать о запуске
+          </p>
         </div>
         <div class="CTA" id="new_subscription">
           <form
@@ -44,93 +50,7 @@
           </form>
           <br /><br />
 
-          <section class="signInSignUpForms">
-            <form
-              action="http://localhost:3000/api/v1/sign_in.json"
-              accept-charset="UTF-8"
-              id="login_form"
-              class="hidden"
-            >
-              <div>
-                <input
-                  placeholder="Ваш email"
-                  type="email"
-                  name="user[email]"
-                  id="user_email"
-                />
-              </div>
-              <div>
-                <input
-                  placeholder="Ваш пароль"
-                  type="password"
-                  name="user[password]"
-                  id="user_password"
-                />
-              </div>
-
-              <div>
-                <input
-                  type="submit"
-                  name="commit"
-                  value="Войти"
-                  data-disable-with="Войти"
-                />
-              </div>
-            </form>
-
-            <br /><br />
-
-            <form
-              action="http://localhost:3000/api/v1/sign_up.json"
-              accept-charset="UTF-8"
-              id="signup_form"
-              class="hidden"
-            >
-              <div>
-                <input
-                  placeholder="Ваш email"
-                  type="email"
-                  name="user[email]"
-                  id="user_email"
-                />
-              </div>
-
-              <div>
-                <input
-                  placeholder="Придумайте пароль"
-                  type="password"
-                  name="user[password]"
-                  id="user_password"
-                />
-              </div>
-
-              <div>
-                <input
-                  placeholder="Повтор пароля"
-                  type="password"
-                  name="user[password_confirmation]"
-                  id="user_password_confirmation"
-                />
-              </div>
-
-              <div>
-                <input
-                  placeholder="Код семьи (если есть)"
-                  type="text"
-                  name="user[invite_code]"
-                />
-              </div>
-
-              <div>
-                <input
-                  type="submit"
-                  name="commit"
-                  value="Зарегистрироваться"
-                  data-disable-with="Зарегистрироваться"
-                />
-              </div>
-            </form>
-          </section>
+          <user_forms></user_forms>
         </div>
       </div>
       <div class="MemoryExamples" id="home">

@@ -64,21 +64,30 @@ module.exports = {
       chunks: ['index']
     }),
 
-    // Preview page
+    // index page
     new HtmlWebpackPlugin({
       hash: true,
       scriptLoading: 'blocking',
-      template: './src/preview.html',
-      filename: './preview.html',
+      template: './src/memories/index.html',
+      filename: './memories/index.html',
       chunks: ['index']
     }),
 
-    // Memory page
+    // Show page
     new HtmlWebpackPlugin({
       hash: true,
       scriptLoading: 'blocking',
-      template: './src/memory.html',
-      filename: './memory.html',
+      template: './src/memories/show.html',
+      filename: './memories/show.html',
+      chunks: ['index']
+    }),
+
+    // New page
+    new HtmlWebpackPlugin({
+      hash: true,
+      scriptLoading: 'blocking',
+      template: './src/memories/new.html',
+      filename: './memories/new.html',
       chunks: ['index']
     }),
 
@@ -87,6 +96,15 @@ module.exports = {
       {
         path: path.join(__dirname, './src/partials/analytics.html'),
         location: 'analytics',
+        template_filename: '*',
+        priority: 'replace'
+      }
+    ]),
+
+    new HtmlWebpackPartialsPlugin([
+      {
+        path: path.join(__dirname, './src/partials/user_forms.html'),
+        location: 'user_forms',
         template_filename: '*',
         priority: 'replace'
       }
