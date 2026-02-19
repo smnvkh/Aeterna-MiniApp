@@ -235,8 +235,6 @@ function initMemoryPage() {
 }
 
 function initNewMemoryForm() {
-  console.log('INIT NEW MEMORY')
-
   const container = document.querySelector('.newMemoryForm')
   if (!container) return
 
@@ -336,10 +334,6 @@ document.addEventListener('DOMContentLoaded', () => {
     authorizeUser()
   }
 
-  if (document.body.classList.contains('memory')) {
-    initMemoryPage()
-  }
-
   if (
     document.body.classList.contains('memories') &&
     document.body.classList.contains('index')
@@ -349,9 +343,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (
     document.body.classList.contains('memories') &&
+    document.body.classList.contains('show')
+  ) {
+    initMemoryPage()
+  }
+
+  if (
+    document.body.classList.contains('memories') &&
     document.body.classList.contains('new')
   ) {
     authorizeUser()
-    initNewMemoryForm()
+    // initNewMemoryForm()
   }
 })

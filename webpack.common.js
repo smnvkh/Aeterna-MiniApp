@@ -8,7 +8,8 @@ const path = require('path')
 
 module.exports = {
   entry: {
-    index: './src/index.js'
+    index: './src/index.js',
+    memory_form: './src/javascript/memory_form.jsx'
   },
   output: {
     filename: '[name].js',
@@ -88,7 +89,7 @@ module.exports = {
       scriptLoading: 'blocking',
       template: './src/memories/new.html',
       filename: './memories/new.html',
-      chunks: ['index']
+      chunks: ['index', 'memory_form']
     }),
 
     // Partials
