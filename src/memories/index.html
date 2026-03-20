@@ -6,19 +6,32 @@
     <title>Memories</title>
   </head>
   <body class="memories index">
+    <p class="Logo">Aeterna</p>
     <nav class="menubar">
-      <a href="../index.html">Главная</a>
-      <span>Воспоминания</span>
+      <a href="../index.html" class="menuButton">Главная</a>
+      <a href="new.html" class="menuButton">Новое воспоминание</a>
     </nav>
 
-    <h1>Воспоминания</h1>
-
-    <a href="new.html">Создать воспоминание</a>
-
+    <section class="Cover">
+      <div class="HeadingAndCTA">
+        <div class="Heading">
+          <h1>Воспоминания</h1>
+        </div>
+      </div>
+    </section>
     <section
       class="memoriesSection"
       data-url="http://localhost:3000/api/v1/memories"
       data-memory-uri="show.html"
     ></section>
+    <section class="Footer">
+      <p href="root_url" id="Name">AETERNA</p>
+      <div class="Authors">
+        <p>Чибичик Алёна</p>
+        <p>Семеновых Мария</p>
+        <p>Ямщикова Виктория</p>
+        <p>©Aeterna, 2025</p>
+      </div>
+    </section>
   </body>
 </html>

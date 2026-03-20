@@ -92,6 +92,15 @@ module.exports = {
       chunks: ['index', 'memory_form']
     }),
 
+    // Sign Up page
+    new HtmlWebpackPlugin({
+      hash: true,
+      scriptLoading: 'blocking',
+      template: './src/index_signup.html',
+      filename: './index_signup.html',
+      chunks: ['index']
+    }),
+
     // Partials
     new HtmlWebpackPartialsPlugin([
       {

@@ -1,3 +1,25 @@
+.home.index {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.signUp .signInSignUpForms #login_form {
+  display: none;
+}
+
+.signUp .signInSignUpForms #signup_form {
+  display: flex;
+}
+
+.logIn .signInSignUpForms #login_form {
+  display: flex;
+}
+
+.logIn .signInSignUpForms #signup_form {
+  display: none;
+}
+
 form {
   &.hidden {
     display: none;
@@ -5,47 +27,45 @@ form {
 }
 
 .Logo {
-  font-family: 'Geist Mono';
-  font-weight: 300;
   text-transform: uppercase;
-  font-size: 0.875rem;
-  line-height: 80%;
-  padding: 1.5rem;
+  font-size: 1.45rem;
+  letter-spacing: -0.02rem;
+  padding: 1rem 1rem 0;
+  text-align: center;
 }
 
 .Cover {
-  font-family: 'Geist Mono';
-  font-weight: 300;
   display: flex;
   flex-direction: row;
-  justify-content: flex-end;
-  padding: 2.87rem 0 0 17.81rem;
+  justify-content: center;
+  padding: 1rem 0;
 }
+
 .HeadingAndCTA {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  align-items: center;
+  gap: 3rem;
 }
 
 .Heading {
   width: 35.875rem;
   display: flex;
   flex-direction: column;
+  align-items: center;
 }
 
 .Heading > H1 {
-  font-family: 'Geist Mono';
   font-size: 3rem;
-  line-height: 100%;
-  letter-spacing: -0.06rem;
-  font-weight: 300;
+  letter-spacing: -0.07rem;
+  text-align: center;
 }
 
 .StrokeText {
   width: 18.7rem;
   height: 100%;
   align-self: end;
-  padding-right: 3rem;
+  padding-left: 3rem;
   margin-top: -1rem;
 }
 
@@ -57,8 +77,78 @@ form {
   font-family: 'Neue Montreal';
 }
 
+.Heading > div {
+  margin-top: 3rem;
+}
+
+.CTA {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.signInSignUpForms > form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.signInSignUpForms input {
+  width: 12rem;
+  padding: 1rem 1.25rem;
+  border-radius: 0.125rem;
+  border: 0.08rem solid var(--Light-Grey);
+  background: var(--White);
+  font-size: 0.8rem;
+}
+
+.signInSignUpForms input::placeholder {
+  color: var(--Light-Grey);
+  font-size: 0.875rem;
+  font-family: 'JetBrains Mono';
+}
+
+.signInSignUpForms input:focus {
+  outline: none;
+  border: 0.08rem solid var(--Light-Blue);
+}
+
+.signInSignUpForms input[type='submit'],
+.textButton,
+.menuButton {
+  background: var(--Light-Blue);
+  color: var(--Dark-Grey);
+  border: none;
+  padding: 1rem 1.25rem;
+  border-radius: 0.125rem;
+  cursor: pointer;
+  font-size: 0.8rem;
+}
+
+.textButton,
+.menuButton {
+  width: 12rem;
+  text-align: center;
+}
+
+.menuButton {
+  background: var(--Blue-halftone);
+  margin-top: 0.5rem;
+}
+
+.Heading a.menuButton:nth-of-type(1) {
+  margin-top: 4rem;
+}
+
+.signInSignUpForms input[type='submit']:hover,
+.textButton:hover,
+.menuButton:hover {
+  opacity: 0.6;
+}
+
 .CTA > a {
-  stroke: #181b16;
+  font-size: 0.8rem;
 }
 
 .Form {
@@ -79,36 +169,35 @@ form {
 }
 
 .FormField {
-  border: 1px solid var(--dark-grey-20);
+  border: 1px solid var(--Dark-Grey);
   background: #fafaf9;
 }
 
 .FormInput,
 .FormButton {
   all: unset;
-  color: var(--black-50);
-  font-family: 'Neue Montreal';
+  color: var(--Dark-Grey);
   font-size: 0.875rem;
   line-height: 100%;
 }
 
 .FormActions {
-  background: var(--light-blue, #bbd3f9);
+  background: var(--Light-Blue);
   cursor: pointer;
 }
 
 .FormButton {
-  color: var(--black, #181b16);
+  color: var(--Dark-Grey);
   align-self: center;
 }
 
 #SuccessSubscription {
-  font-family: 'Neue Montreal';
+  font-family: 'JetBrains Mono';
 }
 
 .FormErrors {
   margin-bottom: 16px;
-  color: #d93025;
+  color: var(--Pink);
 }
 
 .MemoryExamples {
@@ -124,7 +213,7 @@ form {
   flex-direction: column;
   align-items: flex-end;
   border-radius: 0.125rem;
-  background-color: var(--light-grey);
+  background-color: var(--Light-Grey);
   box-shadow: 0 2px 6px 0 rgba(24, 27, 22, 0.08);
   position: absolute;
   gap: 1.5rem;
@@ -134,7 +223,7 @@ form {
   font-size: 0.75rem;
   letter-spacing: -0.015rem;
   margin: 0;
-  color: var(--dark-grey);
+  color: var(--Dark-Grey);
 }
 
 .MemoryAuthor {
@@ -148,7 +237,7 @@ form {
   width: 10.625rem;
   flex-direction: column;
   align-items: center;
-  background: var(--Light-Grey, #eaebe9);
+  background: var(--Light-Grey);
   box-shadow: 0 2px 6px 0 rgba(24, 27, 22, 0.08);
   border-radius: 0 0 0.125rem 0.125rem;
   padding-bottom: 0.5rem;
@@ -167,9 +256,9 @@ body.index .ImageMemory {
   width: 90%;
   text-align: center;
   padding: 0.5rem;
-  color: var(--black-50);
+  color: var(--Dark-Grey);
   font-size: 0.75rem;
-  border-bottom: 1px solid var(--black-50);
+  border-bottom: 1px solid var(--Dark-Grey);
   margin: 0;
 }
 
@@ -208,25 +297,16 @@ body.index .TextMemory:nth-child(6) {
 
 .Footer {
   display: flex;
+  flex-direction: row;
   justify-content: space-between;
-  font-family: 'Geist Mono';
-  font-weight: 300;
-  text-transform: uppercase;
   font-size: 0.875rem;
-  line-height: 80%;
-  padding: 1rem;
-  width: 100%;
-  background-color: var(--light-blue);
-  justify-self: flex-end;
-  margin-top: 3.88rem;
+  background-color: var(--Blue-halftone);
   padding: 1.5rem;
   min-height: 17rem;
 }
 
 #Name {
-  font-family: 'SF Mono';
   font-size: 4rem;
-  line-height: 80%;
 }
 
 .LinksAndDate {
@@ -238,17 +318,22 @@ body.index .TextMemory:nth-child(6) {
   align-self: end;
 }
 
-.LinksAndDate p {
-  font-family: 'SF Mono';
-}
-
 .Pages.Footer {
   margin-top: 0;
   padding: 0;
 }
 
+.Authors {
+  display: flex;
+  flex-direction: column;
+}
+
 .Authors p {
   padding: 0 0 1.3rem;
   margin: 0;
-  padding-right: 4.81rem;
+}
+
+.Authors p:last-child {
+  margin-top: auto;
+  padding: 0;
 }

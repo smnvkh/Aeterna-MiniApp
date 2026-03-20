@@ -2,46 +2,46 @@ import { createElement } from 'react'
 import './index.css'
 import Cookies from 'js-cookie'
 
-function initSubscriptionForm() {
-  const form = document.getElementById('subscription_form')
-  const input = document.querySelector('input[type=email]')
-  const submit = document.querySelector('input[type=submit]')
-  const url = form.action
+// function initSubscriptionForm() {
+//   const form = document.getElementById('subscription_form')
+//   const input = document.querySelector('input[type=email]')
+//   const submit = document.querySelector('input[type=submit]')
+//   const url = form.action
 
-  submit.addEventListener('click', (e) => {
-    e.preventDefault()
+//   submit.addEventListener('click', (e) => {
+//     e.preventDefault()
 
-    const params = {
-      subscription: {
-        email: input.value
-      }
-    }
+//     const params = {
+//       subscription: {
+//         email: input.value
+//       }
+//     }
 
-    fetch(url, {
-      method: 'POST',
-      body: JSON.stringify(params),
-      headers: {
-        'Content-type': 'application/json; charset=UTF-8'
-      }
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        const container = document.createElement('div')
+//     fetch(url, {
+//       method: 'POST',
+//       body: JSON.stringify(params),
+//       headers: {
+//         'Content-type': 'application/json; charset=UTF-8'
+//       }
+//     })
+//       .then((response) => response.json())
+//       .then((data) => {
+//         const container = document.createElement('div')
 
-        const message = document.createElement('p')
-        message.innerText = data.success_text
+//         const message = document.createElement('p')
+//         message.innerText = data.success_text
 
-        const link = document.createElement('a')
-        link.innerText = 'Посмотрите примеры воспоминаний'
-        link.href = '/preview.html'
+//         const link = document.createElement('a')
+//         link.innerText = 'Посмотрите примеры воспоминаний'
+//         link.href = '/preview.html'
 
-        container.appendChild(message)
-        container.appendChild(link)
+//         container.appendChild(message)
+//         container.appendChild(link)
 
-        form.replaceWith(container)
-      })
-  })
-}
+//         form.replaceWith(container)
+//       })
+//   })
+// }
 
 function authorizeUser() {
   const jwt = Cookies.get('jwt')
@@ -63,6 +63,12 @@ function authorizeUser() {
           const headingText = document.querySelector('.HeadingText')
           const ctaButton = document.querySelector('.CTA')
           const heading = document.querySelector('.Heading')
+          const buttons = document.querySelectorAll('.menuButton')
+
+          buttons.forEach((button) => {
+            button.style.display = 'block'
+          })
+
           element.innerText = `Привет, ${data.email}!`
 
           const signOutButton = document.createElement('div')
@@ -72,17 +78,17 @@ function authorizeUser() {
           if (headingText) {
             headingText.replaceWith(element)
           }
-          if (heading) {
-            heading.appendChild(signOutButton)
-          }
-          if (ctaButton) {
-            ctaButton.style.display = 'none'
-          }
 
           if (data.invite_code) {
             inviteElement = document.createElement('div')
             inviteElement.innerText = `Ваш код приглашения для родственников: ${data.invite_code}`
-            document.body.appendChild(inviteElement)
+            heading.appendChild(inviteElement)
+          }
+          if (heading && !document.body.classList.contains('new')) {
+            heading.appendChild(signOutButton)
+          }
+          if (ctaButton) {
+            ctaButton.style.display = 'none'
           }
 
           signOutButton.addEventListener('click', () => {
@@ -103,24 +109,39 @@ function authorizeUser() {
                   heading.removeChild(signOutButton)
                 }
                 if (ctaButton) {
-                  ctaButton.style.display = 'block'
+                  ctaButton.style.display = 'flex'
                 }
                 element.remove()
                 if (inviteElement) inviteElement.remove()
                 Cookies.remove('jwt')
                 initLoginForm()
                 initSignupForm()
+                const buttons = document.querySelectorAll('.menuButton')
+
+                buttons.forEach((button) => {
+                  button.style.display = 'none'
+                })
               })
           })
         } else {
           Cookies.remove('jwt')
           initLoginForm()
           initSignupForm()
+          const buttons = document.querySelectorAll('.menuButton')
+
+          buttons.forEach((button) => {
+            button.style.display = 'none'
+          })
         }
       })
   } else {
     initLoginForm()
     initSignupForm()
+    const buttons = document.querySelectorAll('.menuButton')
+
+    buttons.forEach((button) => {
+      button.style.display = 'none'
+    })
   }
 }
 
@@ -188,15 +209,15 @@ function initPreviewPage() {
 }
 
 function createMemoryPreview(memoryData, container) {
+  const link = document.createElement('a')
+  link.href = `${container.dataset.memoryUri}?memory=${memoryData.id}`
+  link.classList.add('memoryCard')
+
   const wrapper = document.createElement('div')
   wrapper.id = `memory_${memoryData.id}`
 
-  const link = document.createElement('a')
-  link.href = `${container.dataset.memoryUri}?memory=${memoryData.id}`
-  link.innerText = memoryData.title
-
   const title = document.createElement('h2')
-  title.appendChild(link)
+  title.innerText = memoryData.title
 
   const body = document.createElement('p')
   body.innerText = memoryData.body
@@ -218,7 +239,8 @@ function createMemoryPreview(memoryData, container) {
   wrapper.appendChild(date)
   wrapper.appendChild(image)
 
-  container.appendChild(wrapper)
+  link.appendChild(wrapper)
+  container.appendChild(link)
 }
 
 function initMemoryPage() {
@@ -234,103 +256,87 @@ function initMemoryPage() {
     })
 }
 
-function initNewMemoryForm() {
-  const container = document.querySelector('.newMemoryForm')
-  if (!container) return
+// function initNewMemoryForm() {
+//   const container = document.querySelector('.newMemoryForm')
+//   if (!container) return
 
-  const createMemoryUrl = container.dataset.createMemoryUrl
-  const jwt = Cookies.get('jwt')
+//   const createMemoryUrl = container.dataset.createMemoryUrl
+//   const jwt = Cookies.get('jwt')
 
-  const addMemoryButton = document.createElement('div')
-  addMemoryButton.innerText = 'Добавить воспоминание'
-  addMemoryButton.classList.add('addMemoryButton')
+//   const addMemoryButton = document.createElement('div')
+//   addMemoryButton.innerText = 'Добавить воспоминание'
+//   addMemoryButton.classList.add('addMemoryButton')
 
-  container.appendChild(addMemoryButton)
+//   container.appendChild(addMemoryButton)
 
-  let formVisible = false
+//   let formVisible = false
 
-  addMemoryButton.addEventListener('click', () => {
-    if (formVisible) return
+//   addMemoryButton.addEventListener('click', () => {
+//     if (formVisible) return
 
-    const form = document.createElement('form')
-    form.classList.add('memoryForm')
-    form.style.display = 'block' // чтобы сразу показывалось
+//     const form = document.createElement('form')
+//     form.classList.add('memoryForm')
 
-    // Создаем базовые поля
-    form.innerHTML = `
-      <input name="memory[title]" placeholder="Название" required />
-      <textarea name="memory[body]" placeholder="Текст воспоминания"></textarea>
-      <select name="memory[family_member_id]" required>
-        <option value="">Выберите родственника</option>
-      </select>
-      <select name="memory[category_list]">
-        <option value="">Выберите категорию</option>
-        <option value="Summer">Summer</option>
-        <option value="Childhood">Childhood</option>
-        <option value="Pets">Pets</option>
-        <option value="Holidays">Holidays</option>
-      </select>
-      <input name="memory[tag_list]" placeholder="Теги" />
-      <input type="date" name="memory[date]" required />
-      <input type="file" name="memory[image]" />
-      <button type="submit">Создать</button>
-    `
+//     const titleInput = document.createElement('input')
+//     titleInput.name = 'memory[title]'
+//     titleInput.placeholder = 'Название'
+//     titleInput.required = true
 
-    container.appendChild(form)
-    formVisible = true
+//     const bodyTextarea = document.createElement('textarea')
+//     bodyTextarea.name = 'memory[body]'
+//     bodyTextarea.placeholder = 'Текст воспоминания'
 
-    const familySelect = form.querySelector(
-      'select[name="memory[family_member_id]"]'
-    )
+//     form.append(titleInput, bodyTextarea)
+//     container.appendChild(form)
 
-    // Подгружаем родственников через API
-    fetch('http://localhost:3000/api/v1/family_members.json', {
-      headers: { Authorization: `Bearer ${jwt}` }
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        data.forEach((member) => {
-          const option = document.createElement('option')
-          option.value = member.id
-          option.innerText = member.name
-          familySelect.appendChild(option)
-        })
-      })
+//     // Подгружаем родственников через API
+//     fetch('http://localhost:3000/api/v1/family_members.json', {
+//       headers: { Authorization: `Bearer ${jwt}` }
+//     })
+//       .then((response) => response.json())
+//       .then((data) => {
+//         data.forEach((member) => {
+//           const option = document.createElement('option')
+//           option.value = member.id
+//           option.innerText = member.name
+//           familySelect.appendChild(option)
+//         })
+//       })
 
-    form.addEventListener('submit', (e) => {
-      e.preventDefault()
+//     form.addEventListener('submit', (e) => {
+//       e.preventDefault()
 
-      const formData = new FormData(form)
+//       const formData = new FormData(form)
 
-      fetch(createMemoryUrl, {
-        method: 'POST',
-        headers: {
-          Authorization: `Bearer ${jwt}`
-        },
-        body: formData
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          if (!data.id) {
-            alert(
-              'Ошибка создания: ' +
-                (data.errors?.join(', ') || 'неизвестная ошибка')
-            )
-            return
-          }
+//       fetch(createMemoryUrl, {
+//         method: 'POST',
+//         headers: {
+//           Authorization: `Bearer ${jwt}`
+//         },
+//         body: formData
+//       })
+//         .then((response) => response.json())
+//         .then((data) => {
+//           if (!data.id) {
+//             alert(
+//               'Ошибка создания: ' +
+//                 (data.errors?.join(', ') || 'неизвестная ошибка')
+//             )
+//             return
+//           }
 
-          window.location.href = `http://localhost:8080/memories/show.html?memory=${data.id}`
-        })
-    })
-  })
-}
+//           window.location.href = `http://localhost:8080/memories/show.html?memory=${data.id}`
+//         })
+//     })
+//   })
+// }
 
 document.addEventListener('DOMContentLoaded', () => {
   if (
     document.body.classList.contains('home') &&
     document.body.classList.contains('index')
   ) {
-    initSubscriptionForm()
+    // initSubscriptionForm()
     authorizeUser()
   }
 

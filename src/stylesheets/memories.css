@@ -1,59 +1,152 @@
-body.memories {
-  background-color: var(--white);
-  color: var(--black);
-  margin: 0;
-  padding: 3rem;
-  font-size: 0.875rem;
-}
-
-h1 {
-  font-size: 40px;
-  font-weight: 500;
-}
-
-.previewMemories {
+.memoriesSection {
   display: flex;
-  flex-direction: column;
-  gap: 2rem;
-  margin-top: 36px;
-}
-
-.previewMemories > div {
-  width: 22.3%;
-}
-
-body.memories h2 {
-  font-size: 24px;
-}
-
-body.memories p {
-  font-size: 16px;
-}
-
-body.memories img {
-  width: 300px;
-  padding: 1rem;
-}
-
-body.memories .MemoryDate {
-  padding: 0 0 0.2rem;
-}
-
-body.memories .MemoryDescription {
-  margin-top: 1rem;
-}
-
-.ImageMemory {
-  box-shadow: none;
-}
-
-.Memory {
-  display: flex;
-  width: 10.625rem;
   flex-direction: column;
   align-items: center;
-  background: var(--Light-Grey, #eaebe9);
-  box-shadow: 0 2px 6px 0 rgba(24, 27, 22, 0.08);
-  border-radius: 0 0 0.125rem 0.125rem;
-  padding: 1rem;
+  gap: 2rem;
+  padding: 1rem 4rem 2rem;
+}
+
+/* ссылка-карточка */
+.memoryCard {
+  text-decoration: none;
+  color: inherit;
+  width: 100%;
+  max-width: 25rem;
+}
+
+.memoryCard:hover {
+  opacity: 1;
+}
+
+/* сама карточка */
+.memoryCard > div {
+  width: 100%;
+  padding: 2rem;
+  background: white;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.memoriesSection img {
+  width: 100%;
+  margin-top: 0.5rem;
+}
+
+.memoriesSection h2 {
+  font-size: 1.6rem;
+  margin-bottom: 0.4rem;
+}
+
+/* текст воспоминания */
+.memoryCard > div p:first-of-type {
+  line-height: 1.2;
+}
+
+/* автор */
+.memoryCard > div p:nth-of-type(2) {
+  margin-top: 0.6rem;
+}
+
+/* дата */
+.memoryCard > div p:nth-of-type(3) {
+  font-size: 0.85rem;
+  color: var(--Light-Grey);
+}
+
+.memories.show {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem 4rem;
+}
+
+.memories.show .memoryCard {
+  max-width: 25rem;
+  width: 100%;
+}
+
+.memories.show .memoryCard > div {
+  width: 100%;
+  padding: 2rem;
+  background: white;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.memories.show img {
+  width: 100%;
+  margin-top: 0.5rem;
+}
+
+/* Новое воспоминание  */
+.O_MemoryFormContainer {
+  max-width: 25rem;
+  margin: 1rem auto;
+  padding: 2rem;
+  background: white;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
+}
+
+.M_Form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.M_Form h2 {
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+  color: var(--Dark-Grey);
+  text-align: center;
+}
+
+.M_Form input,
+.M_Form textarea,
+.M_Form select {
+  padding: 0.8rem 1rem;
+  border: 1px solid #ccc;
+  color: var(--Dark-Grey);
+  font-family: 'JetBrains Mono';
+}
+
+.M_Form input:focus,
+.M_Form textarea:focus,
+.M_Form select:focus {
+  border-color: #666;
+}
+
+.M_Form textarea {
+  min-height: 6rem;
+  resize: vertical;
+}
+
+.M_Form select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background: url('data:image/svg+xml;utf8,<svg fill="%23666" height="16" viewBox="0 0 24 24" width="16" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>')
+    no-repeat right 0.8rem center;
+}
+
+.M_Form button {
+  padding: 0.8rem;
+  font-family: 'JetBrains Mono';
+  color: var(--Dark-Grey);
+  background-color: var(--Light-Blue);
+  border: none;
+  cursor: pointer;
+}
+
+.M_Form button:hover {
+  opacity: 0.6;
+}
+
+.M_Form img {
+  max-width: 100%;
+  margin-top: 0.5rem;
+  border-radius: 8px;
 }

@@ -5,23 +5,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Aeterna</title>
   </head>
-  <body class="home index">
+  <body class="home index logIn">
     <p class="Logo">Aeterna</p>
-    <nav class="menubar">
-      <span>Главная</span>
+    <!-- <nav class="menubar">
+      <span class="active">Главная</span>
       <a href="/memories/index.html">Воспоминания</a>
-    </nav>
+    </nav> -->
     <section class="Cover">
       <div class="HeadingAndCTA">
         <div class="Heading">
           <h1>Цифровой семейный архив воспоминаний</h1>
           <img src="./images/home/Aeterna.svg" class="StrokeText" />
-          <p class="HeadingText">
+          <!-- <p class="HeadingText">
             Мы скоро откроемся. Подпишитесь, чтобы первыми узнать о запуске
-          </p>
+          </p> -->
+          <a href="./memories/index.html" class="menuButton">Воспоминания</a>
+          <a href="./memories/new.html" class="menuButton"
+            >Новое воспоминание</a
+          >
         </div>
         <div class="CTA" id="new_subscription">
-          <form
+          <!-- <form
             class="Form"
             action="http://localhost:3000/api/v1/subscriptions"
             accept-charset="UTF-8"
@@ -47,13 +51,14 @@
                 data-disable-with="Подписаться"
               />
             </div>
-          </form>
-          <br /><br />
+          </form> -->
+          <!-- <br /><br /> -->
 
           <user_forms></user_forms>
+          <a href="index_signup.html">Зарегистрироваться</a>
         </div>
       </div>
-      <div class="MemoryExamples" id="home">
+      <!-- <div class="MemoryExamples" id="home">
         <div class="TextMemory">
           <p class="MemoryDescription">
             1998. Пляж, тёплый чай в термосе, и никто не хочет уезжать
@@ -92,17 +97,15 @@
           </p>
           <p class="MemoryAuthor">Бабушка Тамара</p>
         </div>
-      </div>
+      </div> -->
     </section>
     <section class="Footer">
       <p href="root_url" id="Name">AETERNA</p>
-      <div class="LinksAndDate">
-        <p>©Aeterna, 2025</p>
-      </div>
       <div class="Authors">
         <p>Чибичик Алёна</p>
         <p>Семеновых Мария</p>
         <p>Ямщикова Виктория</p>
+        <p>©Aeterna, 2025</p>
       </div>
     </section>
   </body>

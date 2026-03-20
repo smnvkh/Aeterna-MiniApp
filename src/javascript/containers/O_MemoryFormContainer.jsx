@@ -7,7 +7,7 @@ export default class O_MemoryFormContainer extends PureComponent {
     super(props)
 
     this.state = {
-      isFormVisible: false
+      isFormVisible: true
     }
   }
 
@@ -20,7 +20,7 @@ export default class O_MemoryFormContainer extends PureComponent {
 
     return (
       <div className="O_MemoryFormContainer">
-        {!isFormVisible && <A_Button onClick={this.handleShowForm} />}
+        {/* {!isFormVisible && <A_Button onClick={this.handleShowForm} />} */}
 
         {isFormVisible && (
           <M_Form
