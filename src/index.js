@@ -230,8 +230,12 @@ function createMemoryPreview(memoryData, container) {
   date.innerText = memoryData.date
 
   const image = document.createElement('img')
-  image.src = memoryData.image_url
-  image.width = 300
+  if (memoryData.image_url && memoryData.image_url !== 'null') {
+    image.src = memoryData.image_url
+    image.width = 300
+  } else {
+    image.style.display = 'none'
+  }
 
   wrapper.appendChild(title)
   wrapper.appendChild(body)
