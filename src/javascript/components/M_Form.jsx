@@ -1,6 +1,25 @@
 import React, { PureComponent } from 'react'
 import Cookies from 'js-cookie'
 
+const tagGroups = {
+  Детство: {
+    tags: ['Школа', 'Друзья', 'Игры', 'Хобби'],
+    color: '#6795d6'
+  },
+  Юность: {
+    tags: ['Выпускной', 'Первая любовь', 'Новые горизонты', 'Мечты'],
+    color: '#e19593'
+  },
+  Взрослая: {
+    tags: ['Работа', 'Достижения', 'Дети', 'Амбиции'],
+    color: '#f2de97'
+  },
+  'Общие категории': {
+    tags: ['Семья', 'Любовь', 'Счастье', 'Радость', 'Ностальгия'],
+    color: '#6d8e6a'
+  }
+}
+
 export default class M_Form extends PureComponent {
   constructor(props) {
     super(props)
@@ -10,9 +29,7 @@ export default class M_Form extends PureComponent {
       formData: {
         title: '',
         body: '',
-        family_member: '',
-        category_list: '',
-        tag_list: '',
+        tag_list: [],
         date: '',
         image: null
       }
@@ -50,6 +67,28 @@ export default class M_Form extends PureComponent {
     }))
   }
 
+  handleTagChange = (tag) => {
+    this.setState((prevState) => {
+      const tags = [...prevState.formData.tag_list]
+
+      if (tags.includes(tag)) {
+        return {
+          formData: {
+            ...prevState.formData,
+            tag_list: tags.filter((t) => t !== tag)
+          }
+        }
+      }
+
+      return {
+        formData: {
+          ...prevState.formData,
+          tag_list: [...tags, tag]
+        }
+      }
+    })
+  }
+
   handleSubmit = (e) => {
     e.preventDefault()
 
@@ -60,7 +99,13 @@ export default class M_Form extends PureComponent {
     const data = new FormData()
 
     for (const key in formData) {
-      data.append(`memory[${key}]`, formData[key])
+      if (key === 'tag_list') {
+        formData.tag_list.forEach((tag) => {
+          data.append('memory[tag_list][]', tag)
+        })
+      } else {
+        data.append(`memory[${key}]`, formData[key])
+      }
     }
 
     fetch(createMemoryUrl, {
@@ -94,29 +139,39 @@ export default class M_Form extends PureComponent {
           onChange={this.handleChange}
         />
 
-        <select name="family_member_id" required onChange={this.handleChange}>
-          <option value="">Выберите родственника</option>
+        <div className="MemoryFormCategories">
+          {Object.entries(tagGroups).map(([group, data]) => (
+            <div className="MemoryFormCatGroup" key={group}>
+              <span className="MemoryFormCatHeading">{group}</span>
 
-          {familyMembers.map((member) => (
-            <option key={member.id} value={member.id}>
-              {member.relation} {member.name}
-            </option>
+              <div className="tags">
+                {data.tags.map((tag) => (
+                  <label className="tag MemoryFormTag" key={tag}>
+                    <input
+                      type="checkbox"
+                      checked={this.state.formData.tag_list.includes(tag)}
+                      onChange={() => this.handleTagChange(tag)}
+                    />
+
+                    <span
+                      className="tag-circle"
+                      style={{
+                        backgroundColor: data.color,
+                        width: '12px',
+                        height: '12px',
+                        borderRadius: '50%',
+                        display: 'inline-block',
+                        marginRight: '6px'
+                      }}
+                    />
+
+                    {tag}
+                  </label>
+                ))}
+              </div>
+            </div>
           ))}
-        </select>
-
-        <select name="category_list" onChange={this.handleChange}>
-          <option value="">Выберите категорию</option>
-          <option value="Summer">Лето</option>
-          <option value="Childhood">Детство</option>
-          <option value="Pets">Питомцы</option>
-          <option value="Holidays">Праздники</option>
-        </select>
-
-        <input
-          name="tag_list"
-          placeholder="Теги"
-          onChange={this.handleChange}
-        />
+        </div>
 
         <input type="date" name="date" required onChange={this.handleChange} />
 

@@ -1,0 +1,83 @@
+.tags {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.MemoryFormCategories {
+  border: 1px solid rgba(167, 166, 164, 0.4);
+  border-radius: 0.125rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1.125rem 1rem;
+}
+
+.MemoryFormCatGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.MemoryFormCatHeading {
+  font-family: 'Neue Montreal';
+  font-size: 1rem;
+  color: var(--Light-Grey);
+}
+
+.MemoryFormTags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.15rem 0rem;
+}
+
+.MemoryForm__categories {
+  border: 1px solid rgba(167, 166, 164, 0.4);
+  border-radius: 0.125rem;
+  padding: 0.875rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.MemoryForm__cat-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.tag.MemoryFormTag {
+  text-transform: none;
+}
+
+.MemoryFormTag {
+  cursor: pointer;
+  user-select: none;
+  opacity: 0.45;
+  transition: opacity 0.15s;
+}
+
+.MemoryFormTag input[type='checkbox'] {
+  display: none;
+}
+
+.MemoryFormTag:hover {
+  opacity: 1;
+}
+
+.MemoryFormTag:has(input:checked) {
+  opacity: 1;
+}
+
+.MemoryFormCategories:has(input:checked) {
+  border-color: var(--Grey);
+}
+
+.MemoryFormUpload:hover {
+  border-color: var(--Grey);
+}
+
+.MemoryFormSubmit:hover {
+  opacity: 0.85;
+}

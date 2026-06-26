@@ -198,8 +198,11 @@ function initSignupForm() {
 function initPreviewPage() {
   const container = document.querySelector('.memoriesSection')
   const url = container.dataset.url
+  const jwt = Cookies.get('jwt')
 
-  fetch(url)
+  fetch(url, {
+    headers: jwt ? { Authorization: `Bearer ${jwt}` } : {}
+  })
     .then((response) => response.json())
     .then((data) => {
       data.forEach((memory) => {
